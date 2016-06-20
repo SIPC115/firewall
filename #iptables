@@ -1,0 +1,32 @@
+#iptables
+# This file is interpreted as shell script.
+# Put your custom iptables rules here, they will
+# be executed with each firewall (re-)start.
+
+#lol
+iptables -I OUTPUT -p tcp --dport 2099 -j DROP
+iptables -I OUTPUT -p tcp --dport 5233 -j DROP
+iptables -I OUTPUT -p tcp -m string --string "lol.qq.com" --algo bm -j DROP
+
+#battle.NET
+iptables -I OUTPUT -p tcp --dport 1119 -j DROP
+iptables -I INPUT -p tcp --dport 1119 -j DROP
+iptables -I OUTPUT -p tcp --dport 3724 -j DROP
+iptables -I INPUT -p tcp --dport 3724 -j DROP
+iptables -I OUTPUT -p udp --dport 1119 -j DROP
+iptables -I INPUT -p udp --dport 1119 -j DROP
+iptables -I OUTPUT -p udp --dport 3724 -j DROP
+iptables -I INPUT -p udp --dport 3724 -j DROP
+
+iptables -t nat -A PREROUTING  -p all --dport 1119 -j DNAT --to 192.168.199.1
+iptables -t nat -A PREROUTING  -p all --dport 3724 -j DNAT --to 192.168.199.1
+
+
+#11
+iptables -I OUTPUT -p tcp --dport 2800 -j DROP
+iptables -I OUTPUT -p tcp --dport 2012 -j DROP
+
+#dns forward
+iptables -t nat -A PREROUTING  -p udp --dport 53 -j DNAT --to 192.168.199.1
+iptables -t nat -A PREROUTING  -p tcp --dport 53 -j DNAT --to 192.168.199.1
+
